@@ -48,6 +48,8 @@ function App() {
 
       setLogs([...logs, record]);
       setCheckIn(null);
+      setMergeCount(0);
+      setNmrCount(0);
     }
   };
 
@@ -65,24 +67,31 @@ function App() {
     <div className="tracker">
       <h1>E4 Tally Tracker</h1>
 
-      <div className="counts">
-        <div>
-          <button onClick={() => setMergeCount(mergeCount + 1)}>+ Merge</button>
-          <p>Merge Count: {mergeCount}</p>
+      {!checkIn ? (
+        <div className="check">
+          <button onClick={handleCheckIn}>Check In</button>
         </div>
-        <div>
-          <button onClick={() => setNmrCount(nmrCount + 1)}>+ NMR</button>
-          <p>NMR Count: {nmrCount}</p>
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className="counts">
+            <div>
+              <button onClick={() => setMergeCount(mergeCount + 1)}>+ Merge</button>
+              <p>Merge Count: {mergeCount}</p>
+            </div>
+            <div>
+              <button onClick={() => setNmrCount(nmrCount + 1)}>+ NMR</button>
+              <p>NMR Count: {nmrCount}</p>
+            </div>
+          </div>
 
-      <div className="check">
-        <button onClick={handleCheckIn} disabled={!!checkIn}>Check In</button>
-        <button onClick={handleCheckOut} disabled={!checkIn}>Check Out</button>
-        <div>
-          <p>Total Tickets: {mergeCount + nmrCount}</p>
-        </div>
-      </div>
+          <div className="check">
+            <button onClick={handleCheckOut}>Check Out</button>
+            <div>
+              <p>Total Tickets: {mergeCount + nmrCount}</p>
+            </div>
+          </div>
+        </>
+      )}
 
       <h2>Logs</h2>
       {logs.length === 0 ? (

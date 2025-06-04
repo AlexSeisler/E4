@@ -6,12 +6,12 @@ body {
 }
 
 .tracker {
-  max-width: 600px;
+  max-width: 700px;
   margin: 4rem auto;
   background: #fff;
-  padding: 2rem 2.5rem;
+  padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 h1 {
@@ -20,11 +20,20 @@ h1 {
   font-size: 2rem;
 }
 
+h2 {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
 .counts, .check {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 button {
@@ -47,38 +56,28 @@ button:hover:not(:disabled) {
   background: #185adb;
 }
 
-input, p {
+input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
   font-size: 1rem;
 }
 
-ul {
-  margin-top: 1rem;
-  padding-left: 1.25rem;
-}
-
-ul li {
-  background: #f0f4f8;
-  margin-bottom: 0.5rem;
-  padding: 0.75rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
 table.log-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+  font-size: 0.95rem;
 }
 
 table.log-table th,
 table.log-table td {
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   padding: 0.5rem;
-  font-size: 0.9rem;
   text-align: center;
 }
 
 table.log-table th {
-  background: #f3f4f6;
+  background-color: #f3f4f6;
   font-weight: bold;
 }
