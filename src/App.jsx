@@ -35,7 +35,9 @@ function App() {
     setCheckOut(outTime);
     if (checkIn) {
       const duration = (outTime - new Date(checkIn)) / 3600000;
-      const loggedTime = ticketsCompleted / 12;
+      const totalTickets = mergeCount + nmrCount;
+      const loggedTime = totalTickets / 12;
+
       const record = {
         timestamp: outTime.toLocaleString(),
         mergeCount,
@@ -69,14 +71,10 @@ function App() {
         <button onClick={handleCheckIn} disabled={!!checkIn}>Check In</button>
         <button onClick={handleCheckOut} disabled={!checkIn}>Check Out</button>
         <div>
-          <input
-            type="number"
-            placeholder="Tickets Completed"
-            value={ticketsCompleted}
-            onChange={(e) => setTicketsCompleted(Number(e.target.value))}
-          />
+          <p>Total Tickets: {mergeCount + nmrCount}</p>
         </div>
       </div>
+
 
       <h2>Logs</h2>
       <ul>
