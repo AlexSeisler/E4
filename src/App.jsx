@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
@@ -9,8 +8,8 @@ function App() {
   const [nmrCount, setNmrCount] = useState(0);
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
-  const [ticketsCompleted, setTicketsCompleted] = useState(0);
   const [logs, setLogs] = useState([]);
+  const [resetConfirm, setResetConfirm] = useState('');
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -42,13 +41,23 @@ function App() {
         timestamp: outTime.toLocaleString(),
         mergeCount,
         nmrCount,
-        ticketsCompleted,
+        ticketsCompleted: totalTickets,
         timeSpent: duration.toFixed(2),
         timeLogged: Math.max(loggedTime, duration).toFixed(2)
       };
+
       setLogs([...logs, record]);
       setCheckIn(null);
-      setTicketsCompleted(0);
+    }
+  };
+
+  const handleReset = () => {
+    if (resetConfirm === 'e4') {
+      setMergeCount(0);
+      setNmrCount(0);
+      setLogs([]);
+      setResetConfirm('');
+      localStorage.removeItem(STORAGE_KEY);
     }
   };
 
@@ -75,17 +84,62 @@ function App() {
         </div>
       </div>
 
-
       <h2>Logs</h2>
-      <ul>
-        {logs.map((log, index) => (
-          <li key={index}>
-            [{log.timestamp}] Merge: {log.mergeCount}, NMR: {log.nmrCount},
-            Tickets: {log.ticketsCompleted}, Time Spent: {log.timeSpent}h,
-            Time Logged: {log.timeLogged}h
-          </li>
-        ))}
-      </ul>
+      {logs.length === 0 ? (
+        <p>No logs yet.</p>
+      ) : (
+        <table className="log-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Merge</th>
+              <th>NMR</th>
+              <th>Tickets</th>
+              <th>Time Spent (h)</th>
+              <th>Time Logged (h)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {logs.map((log, index) => (
+              <tr key={index}>
+                <td>{log.timestamp}</td>
+                <td>{log.mergeCount}</td>
+                <td>{log.nmrCount}</td>
+                <td>{log.ticketsCompleted}</td>
+                <td>{log.timeSpent}</td>
+                <td>{log.timeLogged}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      <div style={{ marginTop: '2rem' }}>
+        <input
+          type="text"
+          placeholder="Type 'e4' to confirm reset"
+          value={resetConfirm}
+          onChange={(e) => setResetConfirm(e.target.value)}
+          style={{ padding: '0.5rem', marginRight: '0.5rem' }}
+        />
+        <button
+          onClick={handleReset}
+          disabled={resetConfirm !== 'e4'}
+          style={{
+            background: resetConfirm === 'e4' ? '#ff4d4f' : '#ccc',
+            color: 'white',
+            padding: '0.5rem 1rem',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: resetConfirm === 'e4' ? 'pointer' : 'not-allowed'
+          }}
+        >
+          Reset Logs
+        </button>
+        <p style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>
+          Type <strong>e4</strong> to confirm and wipe all local tracking data.
+        </p>
+      </div>
     </div>
   );
 }
