@@ -1,0 +1,19 @@
+.tracker {
+  font-family: sans-serif;
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+}
+.counts, .check {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+button {
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+}
+input {
+  padding: 0.5rem;
+  width: 120px;
+}
