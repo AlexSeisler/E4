@@ -7,22 +7,22 @@ body {
 
 .tracker {
   max-width: 700px;
-  margin: 4rem auto;
+  margin: 2rem auto;
   background: #fff;
-  padding: 2.5rem;
+  padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 h1 {
-  margin-bottom: 2rem;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
 }
 
 h2 {
   margin-top: 2rem;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   border-bottom: 1px solid #ddd;
   padding-bottom: 0.5rem;
 }
@@ -30,33 +30,16 @@ h2 {
 .counts {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
   gap: 1rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 
-button {
-  padding: 0.6rem 1.2rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  background: #2e86ff;
-  color: white;
-  cursor: pointer;
-  transition: background 0.2s ease;
+.counts > div {
+  flex: 1;
+  text-align: center;
 }
 
-button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-button:hover:not(:disabled) {
-  background: #185adb;
-}
-
-/* Center the check section */
 .check {
   display: flex;
   flex-direction: column;
@@ -64,9 +47,30 @@ button:hover:not(:disabled) {
   margin-bottom: 2rem;
 }
 
-/* Style check-in and check-out buttons specifically */
+button {
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-size: 1rem;
+  min-width: 140px;
+  text-align: center;
+}
+
+.counts button {
+  background: #2e86ff;
+  color: white;
+}
+
+.counts button:hover:not(:disabled) {
+  background: #185adb;
+}
+
 .check button {
   background: #28a745;
+  color: white;
   font-size: 1.1rem;
   margin: 0.5rem 0;
   width: 180px;
@@ -76,11 +80,19 @@ button:hover:not(:disabled) {
   background: #218838;
 }
 
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
 input {
   padding: 0.5rem;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  max-width: 300px;
 }
 
 table.log-table {
@@ -88,6 +100,8 @@ table.log-table {
   border-collapse: collapse;
   margin-top: 1rem;
   font-size: 0.95rem;
+  overflow-x: auto;
+  display: block;
 }
 
 table.log-table th,
@@ -95,9 +109,27 @@ table.log-table td {
   border: 1px solid #ddd;
   padding: 0.5rem;
   text-align: center;
+  min-width: 90px;
 }
 
 table.log-table th {
   background-color: #f3f4f6;
   font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .counts {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .counts > div {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    width: 100%;
+    max-width: 300px;
+  }
 }
