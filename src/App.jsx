@@ -105,7 +105,7 @@ function App() {
               <th>NMR</th>
               <th>Tickets</th>
               <th>Time Spent (h)</th>
-              <th>Time Logged (h)</th>
+              <th>Time Prod (h)</th>
             </tr>
           </thead>
           <tbody>
