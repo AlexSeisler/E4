@@ -133,3 +133,52 @@ table.log-table th {
     max-width: 300px;
   }
 }
+/* Week toggle button */
+button.week-toggle {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #2e86ff;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+button.week-toggle:hover {
+  text-decoration: underline;
+}
+
+/* Delete icon button */
+table.log-table td button {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: red;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Ensure scrollability on mobile */
+table.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  overflow-x: auto;
+  display: block;
+}
+
+table.log-table th,
+table.log-table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: center;
+  min-width: 90px;
+}
+
+table.log-table th {
+  background-color: #f3f4f6;
+  font-weight: bold;
+}
