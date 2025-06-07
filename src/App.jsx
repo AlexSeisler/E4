@@ -10,6 +10,7 @@ function App() {
   const [checkOut, setCheckOut] = useState(null);
   const [logs, setLogs] = useState([]);
   const [resetConfirm, setResetConfirm] = useState('');
+  const [expandedWeeks, setExpandedWeeks] = useState({});
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -38,7 +39,10 @@ function App() {
       const loggedTime = totalTickets / 12;
 
       const record = {
+        id: Date.now(),
         timestamp: outTime.toLocaleString(),
+        week: getWeekKey(outTime),
+        checkInTime: new Date(checkIn).toLocaleString(),
         mergeCount,
         nmrCount,
         ticketsCompleted: totalTickets,
@@ -62,6 +66,27 @@ function App() {
       localStorage.removeItem(STORAGE_KEY);
     }
   };
+
+  const handleDeleteLog = (id) => {
+    setLogs(logs.filter((log) => log.id !== id));
+  };
+
+  const toggleWeek = (week) => {
+    setExpandedWeeks((prev) => ({ ...prev, [week]: !prev[week] }));
+  };
+
+  const getWeekKey = (date) => {
+    const d = new Date(date);
+    const start = new Date(d.setDate(d.getDate() - d.getDay()));
+    return start.toLocaleDateString();
+  };
+
+  const logsByWeek = logs.reduce((acc, log) => {
+    const week = log.week;
+    if (!acc[week]) acc[week] = [];
+    acc[week].push(log);
+    return acc;
+  }, {});
 
   return (
     <div className="tracker">
@@ -94,33 +119,48 @@ function App() {
       )}
 
       <h2>Logs</h2>
-      {logs.length === 0 ? (
+      {Object.keys(logsByWeek).length === 0 ? (
         <p>No logs yet.</p>
       ) : (
-        <table className="log-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Merge</th>
-              <th>NMR</th>
-              <th>Tickets</th>
-              <th>Time Spent (h)</th>
-              <th>Time Prod (h)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {logs.map((log, index) => (
-              <tr key={index}>
-                <td>{log.timestamp}</td>
-                <td>{log.mergeCount}</td>
-                <td>{log.nmrCount}</td>
-                <td>{log.ticketsCompleted}</td>
-                <td>{log.timeSpent}</td>
-                <td>{log.timeLogged}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        Object.entries(logsByWeek).map(([week, weekLogs]) => (
+          <div key={week} style={{ marginBottom: '1.5rem' }}>
+            <button onClick={() => toggleWeek(week)} style={{ marginBottom: '0.5rem' }}>
+              {expandedWeeks[week] ? '▼' : '▶'} Week of {week}
+            </button>
+            {expandedWeeks[week] && (
+              <table className="log-table">
+                <thead>
+                  <tr>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Merge</th>
+                    <th>NMR</th>
+                    <th>Tickets</th>
+                    <th>Time Spent (h)</th>
+                    <th>Time Prod (h)</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {weekLogs.map((log) => (
+                    <tr key={log.id}>
+                      <td>{log.checkInTime}</td>
+                      <td>{log.timestamp}</td>
+                      <td>{log.mergeCount}</td>
+                      <td>{log.nmrCount}</td>
+                      <td>{log.ticketsCompleted}</td>
+                      <td>{log.timeSpent}</td>
+                      <td>{log.timeLogged}</td>
+                      <td>
+                        <button onClick={() => handleDeleteLog(log.id)} style={{ color: 'red' }}>✖</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        ))
       )}
 
       <div style={{ marginTop: '2rem' }}>
